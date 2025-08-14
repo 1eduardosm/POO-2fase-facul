@@ -1,79 +1,75 @@
-# Classe Livro
-class Livro:
+class Livro: #cria a classe livro
     def __init__(self, titulo, autor):
         self.titulo = titulo
         self.autor = autor
-        self.disponivel = True  # Por padrão, o livro está disponível
+        self.disponivel = True  # por padrão deixa livro disponivel
 
-    def exibirDetalhes(self):
-        print(f'Título: {self.titulo}, Autor: {self.autor}, Disponível: {"Sim" if self.disponivel else "Não"}')
+    def exibirDetalhes(self): #exibe os de talher do livro
+        print(f'Título: {self.titulo}, Autor: {self.autor}, Disponível: {"Sim" if self.disponivel else "Não"}') # se o livro esta disponivel print sim, else nao
 
-# Classe Usuario
+# cria a classe Usuario
 class Usuario:
     def __init__(self, nome):
         self.nome = nome
-        self.livrosEmprestados = []  # Lista de livros emprestados pelo usuário
+        self.livrosEmprestados = []  #cria lista de livros emprestados
 
     def emprestarLivro(self, livro):
-        if livro.disponivel:
-            livro.disponivel = False  # Marca o livro como não disponível
-            self.livrosEmprestados.append(livro)
-            print(f'{self.nome} emprestou o livro: {livro.titulo}')
+        if livro.disponivel: # se esta disponivel
+            livro.disponivel = False   # deixa ele indisponivel
+            self.livrosEmprestados.append(livro) # adiciona o livro na lista de emprestados
+            print(f'{self.nome} emprestou o livro: {livro.titulo}') #só printa oque aconteceu
         else:
             print(f'O livro "{livro.titulo}" não está disponível.')
 
     def devolverLivro(self, livro):
-        if livro in self.livrosEmprestados:
-            livro.disponivel = True  # Marca o livro como disponível
-            self.livrosEmprestados.remove(livro)
+        if livro in self.livrosEmprestados: # se ele esta nos livros emprestados
+            livro.disponivel = True   # devolve ele, deixa ele disponivel
+            self.livrosEmprestados.remove(livro) # remove da lista de emprestados
             print(f'{self.nome} devolveu o livro: {livro.titulo}')
         else:
             print(f'{self.nome} não tem o livro "{livro.titulo}" emprestado.')
 
-# Classe Biblioteca
-class Biblioteca:
+
+class Biblioteca: # cria classe biblioteca
     def __init__(self, nome):
         self.nome = nome
-        self.livros = []  # Lista de livros na biblioteca
+        self.livros = []  #cria a lista de livros
 
     def adicionarLivro(self, livro):
-        self.livros.append(livro)
+        self.livros.append(livro)#adiciona o livro a lista
         print(f'O livro "{livro.titulo}" foi adicionado à biblioteca.')
 
     def exibirLivrosDisponiveis(self):
         print(f'\nLivros disponíveis na Biblioteca {self.nome}:')
-        for livro in self.livros:
-            if livro.disponivel:
+        for livro in self.livros: # para o livro na lista de livros
+            if livro.disponivel: # se o livro é disponivel
                 livro.exibirDetalhes()
 
-# Fluxo principal
-# Criando instâncias das classes Livro, Usuario e Biblioteca
-livro1 = Livro("1984", "George Orwell")
-livro2 = Livro("O Senhor dos Anéis", "J.R.R. Tolkien")
-livro3 = Livro("A Metamorfose", "Franz Kafka")
+livro1 = Livro("teste", "thierry")
+livro2 = Livro("O Senhor dos Anéis", "algum autor")
+livro3 = Livro(" turma da monica", "mauricio de souza")
 
-usuario1 = Usuario("João")
-usuario2 = Usuario("Maria")
+usuario1 = Usuario("dudu")
+usuario2 = Usuario("tutu")
 
-biblioteca = Biblioteca("Biblioteca Central")
+biblioteca = Biblioteca("Biblioteca satc")
 
-# Adicionando livros à biblioteca
+
 biblioteca.adicionarLivro(livro1)
 biblioteca.adicionarLivro(livro2)
 biblioteca.adicionarLivro(livro3)
 
-# Exibindo livros disponíveis
+
 biblioteca.exibirLivrosDisponiveis()
 
-# Usuários emprestando livros
+
 usuario1.emprestarLivro(livro1)
 usuario2.emprestarLivro(livro2)
 
-# Exibindo livros disponíveis após o empréstimo
+
 biblioteca.exibirLivrosDisponiveis()
 
-# Usuários devolvendo livros
 usuario1.devolverLivro(livro1)
 
-# Exibindo livros disponíveis após a devolução
+
 biblioteca.exibirLivrosDisponiveis()
