@@ -56,3 +56,17 @@ class VetorOrdenado:
             for i in range(posicao, self.ultima_posicao):
                 self.valores[i] = self.valores[i + 1]
             self.ultima_posicao -= 1
+
+
+vetor = VetorOrdenado(4)
+vetor.inserir(1)
+vetor.inserir(2)
+vetor.inserir(3)
+vetor.inserir(4)
+vetor.inserir(5)  # Vai mostrar "vetor cheio"
+
+vetor.imprimir() # mostra o que há dentro do vetor
+vetor.pesquisar(2)
+
+vetor.excluir(3)
+vetor.imprimir()
