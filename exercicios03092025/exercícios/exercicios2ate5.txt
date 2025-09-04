@@ -1,0 +1,21 @@
+2. O problema de inserir (enfileirar) elementos em uma Fila envolve? Explique o que  
+“precisa ser feito” para inserir um elemento e quais cuidados devem ser protegidos no 
+algoritmo. 
+
+R: Antes de enfileirar é preciso verificar se a fila não está cheia. Se não estiver, insere-se o elemento na posição apontada pelo fim e atualiza-se esse ponteiro. Em filas não circulares, podem sobrar espaços não aproveitados no início do vetor.
+
+
+3. O problema de retirar (desenfileirar) elementos em uma fila envolve? Explique o que  
+“precisa ser feito” para retirar um elemento e quais cuidados devem ser protegidos no 
+algoritmo. 
+
+R: Antes de desenfileirar é preciso verificar se a fila não está vazia. Se não estiver, remove-se o elemento apontado pelo início e atualiza-se o ponteiro de início. Em implementações não circulares, isso pode deixar espaços não reaproveitados no vetor.
+
+4. Qual critério é utilizado para saber se uma Fila está vazia? 
+
+R: Ele verifica se o número de elementos é igual a zero
+
+
+5. Qual critério é utilizado para saber se uma Fila está cheia?
+
+R: ele verifica se o número de elemento é igual a capacidade.
