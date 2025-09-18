@@ -1,0 +1,16 @@
+8. Suponha  que  você  insira  a  sequência  “S,  A,  T,  C”  em  uma  Pilha.  Então  você 
+desempilha três elementos. Qual o valor do atributo topo da Pilha?  
+
+R: S - 0, A - 1, T - 2, C -3 -> S - 0 -> R: S
+
+9. Qual o principal problema envolvido no algoritmo que implementa a Pilha? 
+
+R: Ele sempre tem que verificar se pilha está cheia para poder implementar.
+
+10. Qual critério é utilizado para saber se uma Pilha está vazia?  
+
+R: Ele tem que verificar topo é igual a -1
+
+11. Qual critério é utilizado para saber se uma Pilha está cheia?  
+
+R: Ele tem que verificcar se topo é igual a capacidade -1
