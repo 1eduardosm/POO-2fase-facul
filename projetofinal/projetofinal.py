@@ -1,68 +1,86 @@
-# ============================================================
-#   ETAPA 3 - IMPLEMENTAÇÃO DO GRAFO USANDO LISTA DE ADJACÊNCIA
-# ============================================================
+#   CLASSE GRAFO (LISTA DE ADJACÊNCIA)
 
-# Cada chave representa uma cidade
-# Cada valor é uma lista de tuplas (Vizinho, Distância)
+class Grafo:
+    def __init__(self):
+        self.vertices = {}
 
-grafo = {
-    "CRICIUMA": [("ICARA", 4), ("RINCAO", 8)],
-    "ICARA": [("CRICIUMA", 4), ("TUBARAO", 8), ("RINCAO", 11)],
-    "TUBARAO": [("ICARA", 8), ("SIDEROPOLIS", 7), ("NOVA VENEZA", 2)],
-    "SIDEROPOLIS": [("TUBARAO", 7), ("ORLEANS", 9), ("ARARANGUA", 14)],
-    "NOVA VENEZA": [("TUBARAO", 2), ("RINCAO", 7), ("ARARANGUA", 4), ("JAGUARUNA", 6)],
-    "RINCAO": [("CRICIUMA", 8), ("ICARA", 11), ("NOVA VENEZA", 7), ("JAGUARUNA", 1)],
-    "JAGUARUNA": [("RINCAO", 1), ("NOVA VENEZA", 6), ("ARARANGUA", 2)],
-    "ARARANGUA": [("JAGUARUNA", 2), ("NOVA VENEZA", 4), ("SIDEROPOLIS", 14), ("ORLEANS", 10)],
-    "ORLEANS": [("SIDEROPOLIS", 9), ("ARARANGUA", 10)]
-}
+    # Adiciona um vértice ao grafo
+    def adicionar_vertice(self, v):
+        if v not in self.vertices:
+            self.vertices[v] = []
 
+    # Adiciona uma aresta ponderada
+    def adicionar_aresta(self, origem, destino, peso):
+        self.adicionar_vertice(origem)
+        self.adicionar_vertice(destino)
+        self.vertices[origem].append((destino, peso))
+        self.vertices[destino].append((origem, peso))  # grafo não direcionado
 
-
-# ============================================================
-#       ETAPA 4 - ALGORITMO DE DIJKSTRA (FORMA DIDÁTICA)
-# ============================================================
-
-def dijkstra(grafo, origem):
-    # 1. Distância inicial infinita para todos
-    distancias = {cidade: float('inf') for cidade in grafo}
-    distancias[origem] = 0  # Origem = 0
-
-    # 2. Conjunto de visitados
-    visitados = set()
-
-    # 3. Continua até visitar todos os nós
-    while len(visitados) < len(grafo):
-
-        # Selecionar o nó NÃO visitado com menor distância
-        menor_no = None
-        menor_distancia = float('inf')
-
-        for cidade in grafo:
-            if cidade not in visitados and distancias[cidade] < menor_distancia:
-                menor_no = cidade
-                menor_distancia = distancias[cidade]
-
-        visitados.add(menor_no)
-
-        # 4. Para cada vizinho do nó atual, tenta atualizar distâncias
-        for vizinho, peso in grafo[menor_no]:
-            nova_distancia = distancias[menor_no] + peso
-
-            # Se encontrou um caminho melhor, atualiza
-            if nova_distancia < distancias[vizinho]:
-                distancias[vizinho] = nova_distancia
-
-    return distancias
+    # Mostra o grafo
+    def mostrar(self):
+        for v in self.vertices:
+            print(f"{v} -> {self.vertices[v]}")
 
 
+#   CLASSE DIJKSTRA
 
-# ============================================================
-#           EXECUTANDO O DIJKSTRA A PARTIR DE CRICIÚMA
-# ============================================================
+class Dijkstra:
+    def __init__(self, grafo):
+        self.grafo = grafo
 
-resultado = dijkstra(grafo, "ICARA")
+    def calcular(self, origem):
+        # 1. Inicializa distâncias
+        distancias = {v: float('inf') for v in self.grafo.vertices}
+        distancias[origem] = 0
 
-print("Menor distância da transportadora (CRICIUMA)\npara cada cidade:\n")
+        # 2. Conjunto de visitados
+        visitados = set()
+
+        # 3. Enquanto não visitar todos
+        while len(visitados) < len(self.grafo.vertices):
+
+            # Escolhe o menor nó não visitado
+            menor_no = None
+            menor_dist = float('inf')
+
+            for v in self.grafo.vertices:
+                if v not in visitados and distancias[v] < menor_dist:
+                    menor_no = v
+                    menor_dist = distancias[v]
+
+            visitados.add(menor_no)
+
+            # Atualiza vizinhos (RELAXAMENTO)
+            for vizinho, peso in self.grafo.vertices[menor_no]:
+                nova_dist = distancias[menor_no] + peso
+                if nova_dist < distancias[vizinho]:
+                    distancias[vizinho] = nova_dist
+
+        return distancias
+
+
+g = Grafo()
+
+g.adicionar_aresta("CRICIUMA", "ICARA", 4)
+g.adicionar_aresta("CRICIUMA", "RINCAO", 8)
+g.adicionar_aresta("ICARA", "TUBARAO", 8)
+g.adicionar_aresta("ICARA", "RINCAO", 11)
+g.adicionar_aresta("TUBARAO", "SIDEROPOLIS", 7)
+g.adicionar_aresta("TUBARAO", "ARARANGUA", 4)
+g.adicionar_aresta("TUBARAO", "NOVA VENEZA", 2)
+g.adicionar_aresta("NOVA VENEZA", "RINCAO", 7)
+g.adicionar_aresta("NOVA VENEZA", "JAGUARUNA", 6)
+g.adicionar_aresta("JAGUARUNA", "ARARANGUA", 2)
+g.adicionar_aresta("ARARANGUA", "SIDEROPOLIS", 14)
+g.adicionar_aresta("RINCAO", "JAGUARUNA", 1)
+g.adicionar_aresta("ARARANGUA", "ORLEANS", 10)
+g.adicionar_aresta("SIDEROPOLIS", "ORLEANS", 9)
+
+d = Dijkstra(g)
+
+origem = "CRICIUMA"
+resultado = d.calcular(origem)
+
+print(f"\nMenor distância a partir de {origem}:\n")
 for cidade, distancia in resultado.items():
     print(f"{cidade}: {distancia}")
